@@ -65,7 +65,6 @@ def get_user_input():
 
 def get_frequencies(ws, die_frequency):
     for column in dice_colums:
-
         for row in range(int(roll_range_start_row),ws.max_row+1):
             if ws.cell(row, column_to_index[column]+2).value is None:
                 break;
