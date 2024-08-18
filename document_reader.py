@@ -7,11 +7,15 @@ data_path = getcwd() + '\\xlsxdata'
 def find_all_xl_files():
     global data_path
 
-    files = [join(data_path, f) for f in listdir(data_path)] # Get each item in the current working directory
-    files = [f for f in files if isfile(f)] # ignore folders
-    files = [f for f in files if f.endswith('.xlsx')] # only get valid excel document filetypes
-    files = [f for f in files if 'Template' not in f] #ignore template files
-    files = [f for f in files if '~$' not in f] # ignore any versions that are "open files" (ususally hidden in explorer)
+    files = [join(data_path, f) for f in listdir(data_path) # Get each item in the current working directory
+             if  (isfile(f))
+             and (f.endswith('xlsx'))
+             and ('Template' not in f)
+             and ('~$' not in f)] 
+    # files = [f for f in files if isfile(f)] # ignore folders
+    # files = [f for f in files if f.endswith('.xlsx')] # only get valid excel document filetypes
+    # files = [f for f in files if 'Template' not in f] #ignore template files
+    # files = [f for f in files if '~$' not in f] # ignore any versions that are "open files" (ususally hidden in explorer)
 
     return files
 
@@ -67,11 +71,11 @@ def get_frequencies(ws, die_frequency):
     for column in dice_colums:
         for row in range(int(roll_range_start_row),ws.max_row+1):
             if ws.cell(row, column_to_index[column]+2).value is None:
-                break;
+                break
         
         cells = ws[column + roll_range_start_row : column + str(row)]
         for cell in cells: 
-            die_frequency[column_to_index[column]][cell[0].value - 1] += 1;
+            die_frequency[column_to_index[column]][cell[0].value - 1] += 1
 
     # return die_frequency
 
